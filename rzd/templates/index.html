@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<form method="post" action="/search/trains/" id="trainsearchform">{% csrf_token %}
+  <label for="stationFrom">Станция отправления: </label>
+  <input id="stationFrom">
+  <input id="stationFromId" type="hidden" name="stationFromId">
+  <br>
+  <label for="stationTo">Станция назначения: </label>
+  <input id="stationTo">
+  <input id="stationToId" type="hidden" name="stationToId">
+  <br>
+  <input type="date" name="date">
+  <input type="submit" value="Поиск">
+</form>
+
+<script type="text/javascript">
+
+    $('#stationFrom').autocomplete({
+        source: 'http://127.0.0.1:8000/suggester/',
+        minLength: 2,
+        delay: 1,
+        select: function( event, ui ) {
+            if (ui.item) {
+              console.log("Selected from: " + ui.item.value + " aka " + ui.item.label);
+              $("#stationFrom").val(ui.item.label);
+              $('#stationFromId').val(ui.item.value);
+            } 
+            else {
+              // "Nothing selected, input was " + this.value );
+            }
+            return false;
+        }
+    });
+    $('#stationTo').autocomplete({
+        source: 'http://127.0.0.1:8000/suggester/',
+        minLength: 2,
+        delay: 1,
+        select: function( event, ui ) {
+            if (ui.item) {
+              console.log("Selected to: " + ui.item.value + " aka " + ui.item.label);
+              $("#stationTo").val(ui.item.label);
+              $('#stationToId').val(ui.item.value);
+            } 
+            else {
+              // "Nothing selected, input was " + this.value );
+            }
+            return false;
+        }
+    });
+
+</script>
+{% endblock %}
