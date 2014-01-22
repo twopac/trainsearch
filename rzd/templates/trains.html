@@ -1,12 +1,44 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
-<script type="text/javascript" src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
-<script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
-</head>
-<body>
-{{rq}}
-</body>
-</html>
+{% extends 'base.html' %}
+
+{% block content %}
+{% for train in trains %}
+<table>
+<tr>
+    <td>Поезд {{train.number}} {{train.route0}} - {{train.route1}}</td>
+</tr>
+<tr>
+    <td>Отправление</td>
+    <td>{{train.date0}} в {{train.time0}}</td>
+</tr>
+<tr>
+    <td>Прибытие</td>
+    <td>{{train.date1}} в {{train.time1}}</td>
+</tr>
+<tr>
+    <td>В пути</td>
+    <td>{{train.timeInWay}}</td>
+</tr>
+<tr>
+    <table style="border:1px gray;">
+        <th></th>
+        <th>Плац</th>
+        <th>Купе</th>
+        <th>Люкс</th>
+        <tr>
+            <td>мест:</td>
+            <td>{{train.places.Плац}}</td>
+            <td>{{train.places.Купе}}</td>
+            <td>{{train.places.Люкс}}</td>
+        </tr>
+        <tr>
+            <td>цена:</td>
+            <td>{{train.prices.Плац}}</td>
+            <td>{{train.prices.Купе}}</td>
+            <td>{{train.prices.Люкс}}</td>
+        </tr>
+    </table>
+</tr>
+</table>
+<br>
+{% endfor %}
+{% endblock %}
